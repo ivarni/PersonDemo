@@ -7,6 +7,7 @@
         <title>PersonDemo</title> 
 
         <link rel="stylesheet" type="text/css" media="screen" href="css/jquery.mobile-1.0a3.min.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="css/personDemo.css" />
 		<!-- link rel="stylesheet" href="assets/css/master.css" type="text/css" media="screen" /-->
         
         <script src="phonegap.js" type="text/javascript" charset="utf-8"></script>
@@ -16,13 +17,22 @@
 		
 		<script type="text/javascript" charset="utf-8">               
 
-           function onBodyLoad() {             
-                document.addEventListener("deviceready",onDeviceReady,false);
-           }
+			var _name = null;
+			var _email = null;
+			var _beer = null; 
+			var _form = null;
+			var _required = null;
+			
+			var NO_BEER = 'XX'; //oh noes
+			var ERROR = "error"; 
+			
+           	function onBodyLoad() {             
+            	document.addEventListener("deviceready",onDeviceReady,false);
+           	}
            
-           function onDeviceReady() {
-           		navigator.notification.alert("Page works");
-           }
+           	function onDeviceReady() {
+           		//navigator.notification.alert("Page works");
+           	}
             
 		</script>
 		
@@ -47,7 +57,7 @@
 	                </div>
 	                <div id="emailDiv" data-role="fieldcontain">
 	                	<label for="email">Email</label>
-		                <input id="email" name="email_r" type="email">
+		                <input id="email" name="email" type="email">
 	                </div>
 	                <div id="beerDiv" data-role="fieldcontain">
 	                	<label for="beer">Favorite beer</label>
@@ -64,12 +74,33 @@
                 </form>
             </div>
         </div>
+        
+        <script type="text/javascript" charset="utf-8">
+        	$(document).ready(function() {
+	        	_name = $('#name');
+				_email = $('#email');
+				_beer = $('#beer');
+				_form = $('#form');
+				_required = $('input[name*="_r"]');
+        	});
+        	
+        	$('#personForm').submit(function() {
+        		var err = false;
+        		
+        		_required.each(function(index) {
+        			$(this).prev().removeClass(ERROR);
+        		});
+        		
+        		_required.each(function(index) {
+					if ($(this).val() == null || $(this).val() == "") {
+						$(this).prev().addClass(ERROR);
+						err = true;
+					}
+				});
 
-        <div data-role="page" id="bakside">
-            <div data-role="content" id="content">
-                <p>Test</p>
-            </div>
-        </div>
+				return !err;						
+    		});
+        </script>
     </body>
 	
 </html>
