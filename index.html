@@ -31,12 +31,13 @@
 			var NO_BEER = 'XX'; //oh noes
 			var ERROR = "error"; 
 			
+			_people = new Lawnchair({adaptor:'dom'});           	
+           	
            	function onBodyLoad() {             
             	document.addEventListener("deviceready",onDeviceReady,false);
            	}
            
            	function onDeviceReady() {
-				_people = new Lawnchair({adaptor:'dom'});           	
            	}
             
 		</script>
