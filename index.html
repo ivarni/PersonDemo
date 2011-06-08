@@ -53,7 +53,7 @@
             </div>
 
             <div data-role="content">
-                <form id="personForm" action="#">
+                <form id="personForm">
 	                <div id="nameDiv" data-role="fieldcontain">
 	                	<label for="name">Name</label>
 		                <input id="name" name="name_r" type="text">
@@ -110,6 +110,10 @@
 				if (!err) {
 					_people.save({name: _name.val(), email:'', beer:''});
     				$('#people').append('<li>' + _name.val() + '</li>');
+				}
+				if ("Netscape" == navigator.appName) {
+					//too lazy to ajaxify for browsers
+					return false;
 				}
 				return !err;						
     		});
