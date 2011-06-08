@@ -26,12 +26,11 @@
 			var _beer = null; 
 			var _form = null;
 			var _required = null;
-			var _people = null;
 			
 			var NO_BEER = 'XX'; //oh noes
 			var ERROR = "error"; 
 			
-			_people = new Lawnchair({adaptor:'dom'});           	
+			var _people = new Lawnchair({adaptor:'dom'});           	
            	
            	function onBodyLoad() {             
             	document.addEventListener("deviceready",onDeviceReady,false);
@@ -54,7 +53,7 @@
             </div>
 
             <div data-role="content">
-                <form id="personForm">
+                <form id="personForm" action="#">
 	                <div id="nameDiv" data-role="fieldcontain">
 	                	<label for="name">Name</label>
 		                <input id="name" name="name_r" type="text">
