@@ -46,13 +46,14 @@
 	
     <body onload="onBodyLoad()">
 
-        <div data-role="page" id="forside">
+        <div data-role="page" id="createPerson">
 
             <div data-role="header">
                 <h1>People</h1>
             </div>
 
             <div data-role="content">
+            	<p><a href="#showPeople">Show people</a></p>
                 <form id="personForm">
 	                <div id="nameDiv" data-role="fieldcontain">
 	                	<label for="name">Name</label>
@@ -75,6 +76,12 @@
 	                	<input type="submit" value="Save" data-inline="true" />
 	                </div>
                 </form>
+            </div>
+        </div>
+        
+        <div data-role="page" id="showPeople">
+        	<div data-role="content">
+            	<p><a href="#createPerson">Create person</a></p>
                 <div>
                 	<ul id="people" />
                 </div>
@@ -90,8 +97,9 @@
 				_required = $('input[name*="_r"]');
 
     			_people.each(function(person) {
-    				$('#people').append('<li>' + person["name"] + '</li>');
+    				$('#people').append(person(person["name"]));
     			});
+    			
         	});
         	
         	$('#personForm').submit(function() {
@@ -109,14 +117,20 @@
 				});
 				if (!err) {
 					_people.save({name: _name.val(), email:'', beer:''});
-    				$('#people').append('<li>' + _name.val() + '</li>');
+    				$('#people').append(person(_name.val()));
 				}
 				if ("Netscape" == navigator.appName) {
-					//too lazy to ajaxify for browsers
+					//too lazy to ajaxify for browsertesting with Firefox and then a DOM-storage won't live long...
 					return false;
 				}
 				return !err;						
     		});
+    		
+    		function person(name) {
+    			return $('<div>').append(
+    				$('<div>').append($('<img>').addClass('person').attr('src', 'images/Person.png')).append($('<span>').addClass('person').text(name)).clone()
+    			).remove().html();
+    		}
         </script>
     </body>
 	
