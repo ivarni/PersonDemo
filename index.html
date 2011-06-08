@@ -65,7 +65,7 @@
 	                </div>
 	                <div id="beerDiv" data-role="fieldcontain">
 	                	<label for="beer">Favorite beer</label>
-	                	<select id="beer" name="beer_r" tabindex="2">
+	                	<select id="beer" name="beer_r">
 	                		<option value="XX">This person's favorite beer</option>		
 	                		<option value="Ringnes">Ringnes</option>		
 	                		<option value="Aass">Aass</option>		
@@ -118,6 +118,7 @@
 				if (!err) {
 					_people.save({name: _name.val(), email:'', beer:''});
     				$('#people').append(person(_name.val()));
+    				resetForm();
 				}
 				if ("Netscape" == navigator.appName) {
 					//too lazy to ajaxify for browsertesting with Firefox and then a DOM-storage won't live long...
@@ -131,6 +132,14 @@
     				$('<div>').append($('<img>').addClass('person').attr('src', 'images/Person.png')).append($('<span>').addClass('person').text(name)).clone()
     			).remove().html();
     		}
+    		
+			function resetForm() {
+				$(":input").not(":button, :submit").each(function () {
+					this.value = this.defaultValue;
+				});
+				$('#beer').val(NO_BEER)
+				$('#beer').selectmenu('refresh', true);  //holy fuck that took me an hour
+			}    		
         </script>
     </body>
 	
