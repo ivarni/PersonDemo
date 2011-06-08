@@ -14,6 +14,10 @@
 
         <script type="text/javascript" src="lib/jquery-1.5.min.js"></script>
         <script type="text/javascript" src="lib/jquery.mobile-1.0a3.min.js"></script>
+        <script type="text/javascript" src="lib/lawnchair/Lawnchair.js"></script>
+        <script type="text/javascript" src="lib/lawnchair/adaptors/WebkitSQLiteAdaptor.js"></script>
+        <script type="text/javascript" src="lib/lawnchair/adaptors/DOMStorageAdaptor.js"></script>
+        <script type="text/javascript" src="lib/lawnchair/adaptors/LawnchairAdaptorHelpers.js"></script>
 		
 		<script type="text/javascript" charset="utf-8">               
 
@@ -22,6 +26,7 @@
 			var _beer = null; 
 			var _form = null;
 			var _required = null;
+			var _people = null;
 			
 			var NO_BEER = 'XX'; //oh noes
 			var ERROR = "error"; 
@@ -31,7 +36,7 @@
            	}
            
            	function onDeviceReady() {
-           		//navigator.notification.alert("Page works");
+				_people = new Lawnchair({adaptor:'dom'});           	
            	}
             
 		</script>
@@ -70,6 +75,9 @@
 	                	<input type="submit" value="Save" data-inline="true" />
 	                </div>
                 </form>
+                <div>
+                	<ul id="people" />
+                </div>
             </div>
         </div>
         
@@ -80,6 +88,10 @@
 				_beer = $('#beer');
 				_form = $('#form');
 				_required = $('input[name*="_r"]');
+
+    			_people.each(function(person) {
+    				$('#people').append('<li>' + person["name"] + '</li>');
+    			});
         	});
         	
         	$('#personForm').submit(function() {
@@ -95,7 +107,10 @@
 						err = true;
 					}
 				});
-
+				if (!err) {
+					_people.save({name: _name.val(), email:'', beer:''});
+    				$('#people').append('<li>' + _name.val() + '</li>');
+				}
 				return !err;						
     		});
         </script>
